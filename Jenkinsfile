@@ -2,6 +2,12 @@
 pipeline{
 
 	agent any
+	
+	tools {
+		maven 'MAVEN'
+		jdk 'JDK'
+		docker 'DOCKER'
+	}
 
 	environment {
 		DOCKERHUB_CREDENTIALS=credentials('dockerhub-pongchai')
@@ -11,35 +17,35 @@ pipeline{
 		
 		stage('Build Package') {
 			steps {
-      				sh '/opt/apache-maven-3.8.7/bin/mvn clean install package -f complete/pom.xml'
+      				sh 'mvn clean install package -f complete/pom.xml'
       			}
 		}
 		
 		stage('Build Docker Image') {
 
 			steps {
-				sh '/usr/local/bin/docker build -t pongchai/gs-rest-service:latest .'
+				sh 'docker build -t pongchai/gs-rest-service:latest .'
 			}
 		}
 
 		stage('Login') {
 
 			steps {
-				sh 'echo $DOCKERHUB_CREDENTIALS_PSW | /usr/local/bin/docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
+				sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
 			}
 		}
 
 		stage('Push Docker Image') {
 
 			steps {
-				sh '/usr/local/bin/docker push pongchai/gs-rest-service:latest'
+				sh 'docker push pongchai/gs-rest-service:latest'
 			}
 		}
 	}
 
 	post {
 		always {
-			sh '/usr/local/bin/docker logout'
+			sh 'docker logout'
 		}
 	}
 
