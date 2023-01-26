@@ -11,7 +11,7 @@ pipeline{
 		
 		stage('Build Package') {
 			steps {
-      				sh '/opt/homebrew/opt/openjdk/bin:/opt/apache-maven-3.8.7/bin/mvn clean install package -f complete/pom.xml'
+      				sh '/opt/apache-maven-3.8.7/bin/mvn clean install package -f complete/pom.xml'
       			}
 		}
 		
