@@ -22,7 +22,7 @@ pipeline{
 		
 		stage('Stop local container') {
             		steps {
-                		catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                		catchError(buildResult: 'SUCCESS', stageResult: 'UNSTABLE') {
                     			sh 'docker container stop gs-rest-service'
                			}
             		}
@@ -30,7 +30,7 @@ pipeline{
         
         	stage('Remove existing container') {
             		steps {
-                		catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                		catchError(buildResult: 'SUCCESS', stageResult: 'UNSTABLE') {
                     			sh 'docker container rm -f gs-rest-service'
                 		}
             		}
@@ -38,7 +38,7 @@ pipeline{
 		
 		stage('Remove existing image') {
             		steps {
-                		catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                		catchError(buildResult: 'SUCCESS', stageResult: 'UNSTABLE') {
                     			sh 'docker rmi -f pongchai/gs-rest-service'
                 		}
             		}
