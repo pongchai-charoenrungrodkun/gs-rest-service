@@ -20,6 +20,14 @@ pipeline{
       			}
 		}
 		
+		stage('Remove existing image') {
+            		steps {
+                		catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                    			sh 'docker rmi -f pongchai/gs-rest-service'
+                		}
+            		}
+        	}
+		
 		stage('Build Docker Image') {
 
 			steps {
