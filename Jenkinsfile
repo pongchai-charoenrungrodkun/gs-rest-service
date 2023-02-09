@@ -20,6 +20,22 @@ pipeline{
       			}
 		}
 		
+		stage('Stop local container') {
+            		steps {
+                		catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                    			sh 'docker container stop gs-rest-service'
+               			}
+            		}
+        	}
+        
+        	stage('Remove existing container') {
+            		steps {
+                		catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                    			sh 'docker container rm -f gs-rest-service'
+                		}
+            		}
+        	}
+		
 		stage('Remove existing image') {
             		steps {
                 		catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
