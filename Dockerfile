@@ -1,4 +1,4 @@
-FROM openjdk:22-ea-24-jdk-slim
+FROM openjdk:22-ea-jdk-slim
 LABEL maintainer="pongchai.mobile@gmail.com"
 ARG JAR_FILE=complete/target/*.jar
 COPY ${JAR_FILE} app.jar
